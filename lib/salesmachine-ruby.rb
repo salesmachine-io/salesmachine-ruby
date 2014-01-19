@@ -3,6 +3,7 @@ require 'salesmachine-ruby/version.rb'
 require 'salesmachine-ruby/contact.rb'
 require 'salesmachine-ruby/user.rb'
 require 'salesmachine-ruby/account.rb'
+require 'salesmachine-ruby/element.rb'
 require 'salesmachine-ruby/track.rb'
 require 'salesmachine-ruby/email.rb'
 

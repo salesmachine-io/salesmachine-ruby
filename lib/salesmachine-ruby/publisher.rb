@@ -23,6 +23,7 @@ module SalesMachine
         		:user => "#{@protocol}://#{SalesMachine.hostname}/v1/user",
         		:customer => "#{@protocol}://#{SalesMachine.hostname}/v1/customer",
         		:account => "#{@protocol}://#{SalesMachine.hostname}/v1/account",
+        		:element => "#{@protocol}://#{SalesMachine.hostname}/v1/element",
         		:pageview => "#{@protocol}://#{SalesMachine.hostname}/v1/pageview",
         		:email => "#{@protocol}://#{SalesMachine.hostname}/v1/email"
       		}[ event ]
