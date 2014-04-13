@@ -18,19 +18,31 @@ You need to register in www.salesmachine.io, setup your project and issue an API
   	# Replace this with the token from your project settings
   	TOKEN = 'your token here'
     SalesMachine.setup do |config|
-		config.api_token=TOKEN
+	config.api_token=TOKEN
     	config.api_secret=""
     	config.hostname="my.salesmachine.io"
     	config.protocol="http"
     end 
 
+
     SalesMachine::Track.pageview("contact_id", {
     	:visit_url => "/home", 
     	:visit_ip => "127.0.0.1", 
     	:visit_agent => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0)"
+
+    )
+
+    SalesMachine::Track.event("<< contact_unique_id >>", "New Signup")
+    
+    SalesMachine::Contact.set("<< contact_unique_id >>", {
+    	:name => "John Doe", 
+    	:company => "Acme", 
+   	:email => "john.doe@acme.com",
+	#.....
     	}
     )
-    
+
+
     end
 
 
