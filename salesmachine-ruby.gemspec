@@ -6,8 +6,8 @@ require 'salesmachine-ruby/version.rb'
 Gem::Specification.new do |spec|
   spec.name        = "salesmachine-ruby"
   spec.version     = SalesMachine::VERSION
-  spec.authors     = ["Gilles Samoun"]
-  spec.email       = ["gsamoun@salesmachine.io"]
+  spec.authors     = ["SalesMachine.IO"]
+  spec.email       = ["support@salesmachine.io"]
   spec.homepage    = "https://www.salesmachine.io"
   spec.summary     = %q{Ruby bindings for the SalesMachine API}
   spec.description = 'The official SalesMachine tracking library for ruby'

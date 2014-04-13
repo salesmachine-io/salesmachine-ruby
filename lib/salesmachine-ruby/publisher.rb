@@ -19,13 +19,10 @@ module SalesMachine
 
       		endpoints = {
         		:tracker => "#{@protocol}://#{SalesMachine.hostname}/v1/track/event",
-        		:contact => "#{@protocol}://#{SalesMachine.hostname}/v1/contact",
         		:user => "#{@protocol}://#{SalesMachine.hostname}/v1/user",
-        		:customer => "#{@protocol}://#{SalesMachine.hostname}/v1/customer",
-        		:account => "#{@protocol}://#{SalesMachine.hostname}/v1/account",
         		:element => "#{@protocol}://#{SalesMachine.hostname}/v1/element",
-        		:pageview => "#{@protocol}://#{SalesMachine.hostname}/v1/pageview",
-        		:email => "#{@protocol}://#{SalesMachine.hostname}/v1/email"
+				:email => "#{@protocol}://#{SalesMachine.hostname}/v1/email",
+				:product => "#{@protocol}://#{SalesMachine.hostname}/v1/product"			
       		}[ event ]
 		end
 
@@ -64,14 +61,12 @@ module SalesMachine
 
 
 		def publish(endpoint,event,unique_id,params={})
-			message = {  :unique_id=>unique_id,:event=>event,:params=>params}
-
+			message = {  :unique_id=>unique_id,:created_at=>Time.now.to_i,:event=>event,:params=>params}
 			post(endpoint, message)
     	end
 
 		def track(event,unique_id,params={})
-			message = {  :unique_id=>unique_id,:event=>event,:params=>params}
-
+			message = {  :unique_id=>unique_id,:created_at=>Time.now.to_i,:event=>event,:params=>params}
 			post(:tracker, message)
     	end
 
@@ -80,7 +75,7 @@ module SalesMachine
 			api_key = SalesMachine.api_token
 			api_secret = SalesMachine.api_secret
 
-			message =  {:unique_id=>unique_id,:params=>params} 
+			message =  {:unique_id=>unique_id,:created_at=>Time.now.to_i,:params=>params} 
 
 			post(endpoint, message)
     	end

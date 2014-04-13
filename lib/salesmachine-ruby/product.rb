@@ -1,10 +1,10 @@
 module SalesMachine
 
-	class Customer
+	class Product
 		def self.set(unique_id,data={})
 			publisher=Publisher.new()
 			message = {:unique_id=>unique_id.to_s,:params=>data}
-			return publisher.post(:customer,message)
+			return publisher.post(:product,message)
 		end
 	end
 end

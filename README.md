@@ -25,9 +25,9 @@ You need to register in www.salesmachine.io, setup your project and issue an API
     end 
 
     SalesMachine::Track.pageview("contact_id", {
-    	:location => "/home", 
-    	:user_ip => "127.0.0.1", 
-    	:user_agent => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0)"
+    	:visit_url => "/home", 
+    	:visit_ip => "127.0.0.1", 
+    	:visit_agent => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0)"
     	}
     )
     

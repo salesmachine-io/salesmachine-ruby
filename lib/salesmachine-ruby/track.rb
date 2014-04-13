@@ -19,10 +19,10 @@ module SalesMachine
 		end
 
 
-		def self.revenue(unique_id,title,data={})
+		def self.order(unique_id,title,data={})
 			publisher=Publisher.new()
 			data[:title]=title
-			return publisher.track(:revenue,unique_id.to_s,data)
+			return publisher.track(:order,unique_id.to_s,data)
 		end
 
 
