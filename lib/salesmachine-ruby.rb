@@ -6,6 +6,7 @@ require 'salesmachine-ruby/element.rb'
 require 'salesmachine-ruby/track.rb'
 require 'salesmachine-ruby/email.rb'
 require 'salesmachine-ruby/product.rb'
+require 'salesmachine-ruby/account.rb'
 
 module SalesMachine
 	@@hostname = "api.salemachine.io"
