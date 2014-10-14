@@ -15,33 +15,33 @@ You need to register in www.salesmachine.io, setup your project and issue an API
     require 'salesmachine-ruby'
 
     if __FILE__ == $0
-  	# Replace this with the token from your project settings
-  	TOKEN = 'your token here'
-    SalesMachine.setup do |config|
-	config.api_token=TOKEN
-    	config.api_secret=""
-    	config.hostname="my.salesmachine.io"
-    	config.protocol="http"
-    end 
+      	# Replace this with the token from your project settings
+        SalesMachine.setup do |config|
+            config.api_token="replace by production token"
+        	config.api_secret="eplace by production secret"
+        end 
 
+        SalesMachine::Track.pageview("contact_id", {
+        	:visit_url => "/home", 
+        	:visit_ip => "127.0.0.1", 
+        	:visit_agent => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0)"
+        )
 
-    SalesMachine::Track.pageview("contact_id", {
-    	:visit_url => "/home", 
-    	:visit_ip => "127.0.0.1", 
-    	:visit_agent => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0)"
+        SalesMachine::Track.event("<< contact_unique_id >>", :user_signup)
+        
+        SalesMachine::Contact.set("<< contact_unique_id >>", {
+            :name => "John Doe", 
+            :email => "john.doe@acme.com",
+            :account_id=>"<< account_unique_id ie 12345 >>",
+            #.....
+            }
+        )
 
-    )
-
-    SalesMachine::Track.event("<< contact_unique_id >>", "New Signup")
-    
-    SalesMachine::Contact.set("<< contact_unique_id >>", {
-    	:name => "John Doe", 
-    	:company => "Acme", 
-   	:email => "john.doe@acme.com",
-	#.....
-    	}
-    )
-
+        SalesMachine::Account.set("<< account_unique_id ie 12345 >>", {
+            :name => "My company", 
+            #.....
+            }
+        )
 
     end
 
@@ -49,6 +49,34 @@ You need to register in www.salesmachine.io, setup your project and issue an API
 The primary class you will use to track events is **SalesMachine.IO**. An instance of
 SalesMachine::Track.pageview is enough to send events directly to **SalesMachine.IO**, and get you integrated
 right away.
+
+## Ruby on Rails
+
+### Installation
+
+    gem install salesmachine-ruby
+
+or in Gemfile
+
+    gem 'salesmachine-ruby'
+
+### Configuration
+
+create a file config/initializers/salesmachine.rb
+
+    require "salesmachine-ruby"
+
+    SalesMachine.setup do |config|
+        if Rails.env=="development"
+            config.api_token="--> development token <--"
+            config.api_secret="--> development secret <--"
+        end
+        if Rails.env=="production"
+            config.api_token="--> production token <--"
+            config.api_secret="--> production token <--"
+        end
+    end
+
 
 ### Additional Information
 
