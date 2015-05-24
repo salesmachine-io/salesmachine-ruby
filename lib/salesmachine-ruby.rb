@@ -9,7 +9,7 @@ require 'salesmachine-ruby/product.rb'
 require 'salesmachine-ruby/account.rb'
 
 module SalesMachine
-	@@hostname = "api.salemachine.io"
+	@@hostname = "api.salesmachine.io"
 	@@protocol = "https"
 	@@api_token = nil
 	@@api_secret = nil
