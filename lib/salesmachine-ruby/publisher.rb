@@ -20,7 +20,7 @@ module SalesMachine
       base_url = "#{@protocol}://#{SalesMachine.hostname}/v1"
       endpoints = {
         :tracker => "#{base_url}/track/event",
-        :user => "#{base_url}/user",
+        :contact => "#{base_url}/contact",
         :element => "#{base_url}/element",
         :email => "#{base_url}/email",
         :product => "#{base_url}/product",
@@ -104,7 +104,7 @@ module SalesMachine
       if succeeded
         return true
       else
-        error="Could not write to SalesMachine, server responded with #{response.code} returning: '#{response.body}'"
+        error = "Could not write to SalesMachine, server responded with #{response.code} returning: '#{response.body}'"
         puts error
         return error
       end
