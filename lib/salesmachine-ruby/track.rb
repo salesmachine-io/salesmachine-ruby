@@ -1,31 +1,20 @@
 module SalesMachine
 
-	class Track
-		def self.event(unique_id,event_id,data={})
-			publisher=Publisher.new()
-			return publisher.track(event_id,unique_id.to_s,data)
-		end
+  class Track
+    def self.event(contact_uid, event_uid, data={})
+      publisher = Publisher.new()
+      data[:display_name] = data[:display_name] || event_uid
+      return publisher.track(contact_uid.to_s, event_uid, data)
+    end
 
-		def self.pageview(unique_id,data={})
-			return self.event(unique_id.to_s,:pageview,data)
-		end
+    def self.pageview(contact_uid, data={})
+      return self.event(contact_uid.to_s, :pageview, data)
+    end
 
-		def self.email(unique_id,title,data={})
-			publisher=Publisher.new()
-			data[:title]=title
-			return publisher.track(:email,unique_id.to_s,data)
-		end
-
-		def self.order(unique_id,title,data={})
-			publisher=Publisher.new()
-			data[:title]=title
-			return publisher.track(:order,unique_id.to_s,data)
-		end
-
-		# will be deprecated use event instead
-		def self.custom(unique_id,event_id,title,data={})
-			data[:title]=title
-			return self.event(unique_id,event_id,data)
-		end
-	end
+    def self.email(contact_uid, email_name, data={})
+      publisher = Publisher.new()
+      data[:display_name] = email_name
+      return publisher.track(contact_uid.to_s, :email, data)
+    end
+  end
 end
