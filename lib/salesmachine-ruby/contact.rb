@@ -1,13 +1,9 @@
 module SalesMachine
+
 	# Alias of USER will be deprecated
 	class Contact
-		def self.set(unique_id,data={})
-			User.set(unique_id,data)
-			#publisher=Publisher.new()
-			#message = {:unique_id=>unique_id.to_s,:params=>data}
-
-			#return publisher.post(:user,message)
-
+		def self.set(contact_uid, data={})
+			User.set(contact_uid, data)
 		end
 	end
 end
