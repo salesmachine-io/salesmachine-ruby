@@ -23,7 +23,6 @@ module SalesMachine
         :user => "#{base_url}/user",
         :element => "#{base_url}/element",
         :email => "#{base_url}/email",
-        :product => "#{base_url}/product",
         :account => "#{base_url}/account"
       }[endpoint]
     end
