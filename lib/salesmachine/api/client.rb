@@ -77,14 +77,14 @@ module Salesmachine
         symbolize_keys! attrs
         check_contact_uid! attrs
 
-        email_uid = attrs[:email]
+        email = attrs[:email]
         params = attrs[:params] || {}
         created_at = attrs[:created_at] || Time.new
 
         check_timestamp! created_at
 
-        if email_uid.nil? || email_uid.empty?
-          fail ArgumentError, 'Must supply email_uid template as a non-empty string'
+        if email.nil? || email.empty?
+          fail ArgumentError, 'Must supply email template as a non-empty string'
         end
 
         fail ArgumentError, 'Params must be a Hash' unless params.is_a? Hash
