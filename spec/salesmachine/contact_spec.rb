@@ -16,7 +16,6 @@ module Salesmachine
 
         it 'should not error with the required options' do
           @client.contact Queued::CONTACT
-#          @queue.pop
         end
 
         it 'should not error with the required options as strings' do

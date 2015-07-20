@@ -42,7 +42,6 @@ module Salesmachine
         backoff = @backoff
         headers = { 'Content-Type' => 'application/json', 'accept' => 'application/json' }
         begin
-#          payload = JSON.generate  :api_token=>api_key, :encode=>"base64", :data=>batch
           payload = batch.to_json
 
           request = Net::HTTP::Post.new(@path, headers)
@@ -56,13 +55,13 @@ module Salesmachine
             res = @http.request(request, payload)
 
             status = res.code.to_i
-            unless status==200 or status==201
+            unless status == 200 or status == 201
               body = JSON.parse(res.body)
                error = body["error"]
             end
           end
         rescue Exception => e
-          unless (remaining_retries -=1).zero?
+          unless (remaining_retries -= 1).zero?
             sleep(backoff)
             retry
           end

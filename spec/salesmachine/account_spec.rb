@@ -11,7 +11,6 @@ module Salesmachine
         end
 
         after :each do
-#          @queue.clear
           @client.flush
         end
 

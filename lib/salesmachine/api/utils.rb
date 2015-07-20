@@ -41,7 +41,7 @@ module Salesmachine
 
       # public: Returns a uid string
       #
-      def uid
+      def create_uid
         arr = SecureRandom.random_bytes(16).unpack("NnnnnN")
         arr[2] = (arr[2] & 0x0fff) | 0x4000
         arr[3] = (arr[3] & 0x3fff) | 0x8000
