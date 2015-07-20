@@ -1,91 +1,41 @@
-salesmachine-ruby: The Official SalesMachine Ruby library
-====================================================================
-salesmachine-ruby is a library for tracking events and sending **SalesMachine.IO** profile updates to **SalesMachine.IO** from your ruby applications. It's straightforward to get started sending your first events and updates:
+# Salesmachine::Ruby
+
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/salesmachine/ruby`. To experiment with that code, run `bin/console` for an interactive prompt.
+
+TODO: Delete this and the text above, and describe your gem
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'salesmachine-ruby'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install salesmachine-ruby
+
+## Usage
+
+TODO: Write usage instructions here
+
+## Development
+
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/salesmachine-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
-### Installation
+## License
 
-    gem install salesmachine-ruby
-
-### Getting Started
-
-You need to register in www.salesmachine.io, setup your project and issue an API token
-
-
-    require 'salesmachine-ruby'
-
-    if __FILE__ == $0
-      	# Replace this with the token from your project settings
-        SalesMachine.setup do |config|
-            config.api_token="replace by production token"
-        	config.api_secret="replace by production secret"
-        end
-
-        SalesMachine::Track.pageview("contact_id", {
-        	:visit_url => "/home",
-        	:visit_ip => "127.0.0.1",
-        	:visit_agent => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0)"
-        )
-
-        SalesMachine::Track.event("<< contact_unique_id >>", :user_signup)
-
-        SalesMachine::Contact.set("<< contact_unique_id >>", {
-            :name => "John Doe",
-            :email => "john.doe@acme.com",
-            :account_id=>"<< account_unique_id ie 12345 >>",
-            #.....
-            }
-        )
-
-        SalesMachine::Account.set("<< account_unique_id ie 12345 >>", {
-            :name => "My company",
-            #.....
-            }
-        )
-
-    end
-
-
-The primary class you will use to track events is **SalesMachine.IO**. An instance of
-SalesMachine::Track.pageview is enough to send events directly to **SalesMachine.IO**, and get you integrated
-right away.
-
-## Ruby on Rails
-
-### Installation
-
-    gem install salesmachine-ruby
-
-or in Gemfile
-
-    gem 'salesmachine-ruby'
-
-### Configuration
-
-create a file config/initializers/salesmachine.rb
-
-    require "salesmachine-ruby"
-
-    SalesMachine.setup do |config|
-        if Rails.env=="development"
-            config.api_token="--> development token <--"
-            config.api_secret="--> development secret <--"
-        end
-        if Rails.env=="production"
-            config.api_token="--> production token <--"
-            config.api_secret="--> production token <--"
-        end
-    end
-
-
-### Additional Information
-
-For more information please visit:
-
-* The documentation[http://salesmachine.github.io/salesmachine-ruby/]
-
-### Changes
-
-
-
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
