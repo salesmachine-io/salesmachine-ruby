@@ -90,13 +90,17 @@ module Salesmachine
         fail ArgumentError, 'Params must be a Hash' unless params.is_a? Hash
         isoify_dates! params
 
-        enqueue({
+        to_send = {
           :email => email,
           :contact_uid => attrs[:contact_uid],
           :params => params,
           :created_at => datetime_in_iso8601(created_at),
           :method => 'email'
-        })
+        }
+        enqueue(to_send)
+        flush
+
+        return to_send
       end
 
 
@@ -162,6 +166,10 @@ module Salesmachine
           :created_at => datetime_in_iso8601(created_at),
           :method => 'pageview'
         })
+      end
+
+      def queued_nb
+        @queue.length
       end
 
       private

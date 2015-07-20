@@ -43,6 +43,13 @@ module Salesmachine
       }
     }
 
+    EMAIL = {
+      :email => "My Email title",
+      :params => {
+        :type => "Newsletter email"
+      }
+    }
+
     CONTACT_UID = 1234
     ACCOUNT_UID = 1234
 
@@ -50,6 +57,7 @@ module Salesmachine
     module Queued
       TRACK = TRACK.merge :contact_uid => CONTACT_UID
       PAGEVIEW = PAGEVIEW.merge :contact_uid => CONTACT_UID
+      EMAIL = EMAIL.merge :contact_uid => CONTACT_UID
       CONTACT = CONTACT.merge :contact_uid => CONTACT_UID
       ACCOUNT = ACCOUNT.merge :account_uid => ACCOUNT_UID
     end
