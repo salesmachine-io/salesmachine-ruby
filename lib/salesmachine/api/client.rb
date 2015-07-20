@@ -77,7 +77,7 @@ module Salesmachine
         symbolize_keys! attrs
         check_contact_uid! attrs
 
-        email_uid = attrs[:email_uid]
+        email_uid = attrs[:email]
         params = attrs[:params] || {}
         created_at = attrs[:created_at] || Time.new
 
@@ -91,7 +91,7 @@ module Salesmachine
         isoify_dates! params
 
         enqueue({
-          :email_uid => email_uid,
+          :email => email,
           :contact_uid => attrs[:contact_uid],
           :params => params,
           :created_at => datetime_in_iso8601(created_at),
