@@ -14,15 +14,15 @@ module Salesmachine
       # and makes requests to the salesmachine.io api
       #
       # queue   - Queue synchronized between client and worker
-      # api_key  - String of the application's Api key
+      # api_token  - String of the application's Api key
       # options - Hash of worker options
       #           batch_size - Fixnum of how many items to send in a batch
       #           on_error   - Proc of what to do on an error
       #
-      def initialize(queue, api_key, options = {})
+      def initialize(queue, api_token, options = {})
         symbolize_keys! options
         @queue = queue
-        @api_key = api_key
+        @api_token = api_token
         @batch_size = options[:batch_size] || Queue::BATCH_SIZE
         @on_error = options[:on_error] || Proc.new { |status, error| }
         @batch = []
@@ -41,7 +41,7 @@ module Salesmachine
             end
           end
 
-          res = Request.new.post @api_key, @batch
+          res = Request.new.post @api_token, @batch
 
           @lock.synchronize { @batch.clear }
 

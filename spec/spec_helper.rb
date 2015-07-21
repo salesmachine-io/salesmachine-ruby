@@ -9,7 +9,7 @@ Time.zone = 'UTC'
 
 module Salesmachine
   class Api
-    API_KEY = '<api_key>'
+    API_TOKEN = '<api_token>'
     API_SECRET = '<api_secret>'
 
     CONTACT = {
@@ -24,7 +24,7 @@ module Salesmachine
       :event_uid => 'signed_up',
       :params => {
         :referrer => 'Google',
-        :created =>  Time.new
+        :created =>  Time.new,
       }
     }
 
@@ -56,9 +56,17 @@ module Salesmachine
     # Hashes sent to the client, snake_case
     module Queued
       TRACK = TRACK.merge :contact_uid => CONTACT_UID
+      TRACK[:params] = TRACK[:params].merge :account_uid => ACCOUNT_UID
+
       PAGEVIEW = PAGEVIEW.merge :contact_uid => CONTACT_UID
+      PAGEVIEW[:params] = PAGEVIEW[:params].merge :account_uid => ACCOUNT_UID
+
       EMAIL = EMAIL.merge :contact_uid => CONTACT_UID
+      EMAIL[:params] = EMAIL[:params].merge :account_uid => ACCOUNT_UID
+
       CONTACT = CONTACT.merge :contact_uid => CONTACT_UID
+      CONTACT[:params] = CONTACT[:params].merge :account_uid => ACCOUNT_UID
+
       ACCOUNT = ACCOUNT.merge :account_uid => ACCOUNT_UID
     end
 

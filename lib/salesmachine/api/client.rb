@@ -12,20 +12,20 @@ module Salesmachine
       # public: Creates a new client
       #
       # attrs - Hash
-      #           :api_key         - String of your project's api_key
+      #           :api_token         - String of your project's api_token
       #           :max_queue_size - Fixnum of the max calls to remain queued (optional)
       #           :on_error       - Proc which handles error calls from the API
       def initialize attrs = {}
         symbolize_keys! attrs
 
         @queue = Queue.new
-        @api_key = attrs[:api_key]
+        @api_token = attrs[:api_token]
         @max_queue_size = attrs[:max_queue_size] || Config::Queue::MAX_SIZE
         @options = attrs
         @worker_mutex = Mutex.new
-        @worker = Worker.new @queue, @api_key, @options
+        @worker = Worker.new @queue, @api_token, @options
 
-        check_api_key!
+        check_api_token!
 
         at_exit { @worker_thread && @worker_thread[:should_exit] = true }
       end
@@ -90,17 +90,16 @@ module Salesmachine
         fail ArgumentError, 'Params must be a Hash' unless params.is_a? Hash
         isoify_dates! params
 
-        to_send = {
+        msg = enqueue({
           :email => email,
           :contact_uid => attrs[:contact_uid],
           :params => params,
           :created_at => datetime_in_iso8601(created_at),
           :method => 'email'
-        }
-        enqueue(to_send)
-        flush
+        })
 
-        return to_send
+        flush if msg
+        msg
       end
 
 
@@ -164,7 +163,7 @@ module Salesmachine
           :event_uid => "pageview",
           :params => attrs[:params],
           :created_at => datetime_in_iso8601(created_at),
-          :method => 'pageview'
+          :method => 'event'
         })
       end
 
@@ -184,7 +183,7 @@ module Salesmachine
             ensure_worker_running
             @queue << action
           end
-          !queue_full
+          queue_full ? !queue_full : action
         end
 
         # private: Ensures that a string is non-empty
@@ -205,9 +204,9 @@ module Salesmachine
           context[:library] =  { :name => "salesmachine-ruby", :version => Salesmachine::Api::VERSION.to_s }
         end
 
-        # private: Checks that the api_key is properly initialized
-        def check_api_key!
-          fail ArgumentError, 'Api key must be initialized' if @api_key.nil?
+        # private: Checks that the api_token is properly initialized
+        def check_api_token!
+          fail ArgumentError, 'Api key must be initialized' if @api_token.nil?
         end
 
         # private: Checks the timstamp option to make sure it is a Time.

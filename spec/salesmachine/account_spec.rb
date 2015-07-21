@@ -6,7 +6,7 @@ module Salesmachine
 
       describe '#account' do
         before :all do
-          @client = Client.new :api_key => API_KEY
+          @client = Client.new :api_token => API_TOKEN
           @queue = @client.instance_variable_get :@queue
         end
 

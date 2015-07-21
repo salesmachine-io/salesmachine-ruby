@@ -36,7 +36,7 @@ module Salesmachine
       # public: Posts the write key and batch of messages to the API.
       #
       # returns - Response of the status and error if it exists
-      def post(api_key, batch)
+      def post(api_token, batch)
         status, error = nil, nil
         remaining_retries = @retries
         backoff = @backoff
@@ -45,12 +45,12 @@ module Salesmachine
           payload = batch.to_json
 
           request = Net::HTTP::Post.new(@path, headers)
-          request.basic_auth api_key, api_key
+          request.basic_auth api_token, api_token
 
           if self.class.stub
             status = 200
             error = nil
-            logger.debug "stubbed request to #{@path}: write key = #{api_key}, payload = #{payload}"
+            logger.debug "stubbed request to #{@path}: write key = #{api_token}, payload = #{payload}"
           else
             res = @http.request(request, payload)
 

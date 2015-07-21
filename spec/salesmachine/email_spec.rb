@@ -6,7 +6,7 @@ module Salesmachine
 
       describe '#email' do
         before(:all) do
-          @client = Client.new :api_key => API_KEY
+          @client = Client.new :api_token => API_TOKEN
           @queue = @client.instance_variable_get :@queue
         end
 
@@ -25,7 +25,7 @@ module Salesmachine
         it 'should error if params is not a hash' do
           expect {
             @client.email({
-              :contact_uid => 'user',
+              :contact_uid => CONTACT_UID,
               :email => 'email',
               :params => [1,2,3]
             })
@@ -44,7 +44,7 @@ module Salesmachine
           time = Time.parse("1990-07-16 13:30:00.123 UTC")
 
           msg = @client.email({
-            :contact_uid => 'joe',
+            :contact_uid => CONTACT_UID,
             :email => 'email',
             :created_at => time
           })
@@ -54,12 +54,12 @@ module Salesmachine
 
         it 'should flush the queue after an email has been added' do
           @client.track({
-            :contact_uid => 'joe',
+            :contact_uid => CONTACT_UID,
             :event_uid => 'testing the timestamp'
           })
 
           @client.email({
-            :contact_uid => 'joe',
+            :contact_uid => CONTACT_UID,
             :email => 'email'
           })
 

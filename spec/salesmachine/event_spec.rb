@@ -6,7 +6,7 @@ module Salesmachine
 
       describe '#track' do
         before(:all) do
-          @client = Client.new :api_key => API_KEY
+          @client = Client.new :api_token => API_TOKEN
           @queue = @client.instance_variable_get :@queue
         end
 
@@ -25,7 +25,7 @@ module Salesmachine
         it 'should error if params is not a hash' do
           expect {
             @client.track({
-              :contact_uid => 'user',
+              :contact_uid => CONTACT_UID,
               :event_uid => 'event',
               :params => [1,2,3]
             })
@@ -36,12 +36,13 @@ module Salesmachine
           time = Time.parse("1990-07-16 13:30:00.123 UTC")
 
           @client.track({
-            :contact_uid => 'joe',
+            :contact_uid => CONTACT_UID,
             :event_uid => 'testing the timestamp',
-            :created_at => time
+            :created_at => time,
+            :params => {
+              :account_uid => ACCOUNT_UID
+            }
           })
-
-          msg = @queue.pop
 
           Time.parse(msg[:created_at]).should == time
         end
@@ -52,22 +53,21 @@ module Salesmachine
 
         it 'should not error when given string keys' do
           @client.track Utils.stringify_keys(Queued::TRACK)
-          @queue.pop
         end
 
         it 'should convert time and date traits into iso8601 format' do
           @client.track({
-            :contact_uid => 'user',
+            :contact_uid => CONTACT_UID,
             :event_uid => 'event',
             :params => {
               :time => Time.utc(2013),
               :time_with_zone =>  Time.zone.parse('2013-01-01'),
               :date_time => DateTime.new(2013,1,1),
               :date => Date.new(2013,1,1),
-              :nottime => 'x'
+              :nottime => 'x',
+              :account_uid => ACCOUNT_UID
             }
           })
-          message = @queue.pop
           message[:params][:time].should == '2013-01-01T00:00:00.000Z'
           message[:params][:time_with_zone].should == '2013-01-01T00:00:00.000Z'
           message[:params][:date_time].should == '2013-01-01T00:00:00.000Z'
