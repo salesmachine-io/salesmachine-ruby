@@ -6,7 +6,11 @@ module Salesmachine
 
       describe '#pageview' do
         before :all do
-          @client = Client.new :api_key => API_KEY
+          @client = Client.new :api_token => API_TOKEN
+        end
+
+        after :each do
+          @client.flush
         end
 
         it 'should error without contact_uid' do
@@ -19,7 +23,6 @@ module Salesmachine
 
         it 'should not error with the required options as strings' do
           @client.pageview Utils.stringify_keys(Queued::PAGEVIEW)
-          @client.flush
         end
       end
     end

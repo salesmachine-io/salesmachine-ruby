@@ -4,7 +4,7 @@ module Salesmachine
       module Request
         HOST = 'play.salesmachine.net'
         PORT = 443
-        PATH = '/v1/bulk'
+        PATH = '/v1/batch'
         SSL = true
         HEADERS = { :accept => 'application/json' }
         RETRIES = 4

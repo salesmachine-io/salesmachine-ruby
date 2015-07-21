@@ -36,33 +36,32 @@ module Salesmachine
       # public: Posts the write key and batch of messages to the API.
       #
       # returns - Response of the status and error if it exists
-      def post(api_key, batch)
+      def post(api_token, batch)
         status, error = nil, nil
         remaining_retries = @retries
         backoff = @backoff
         headers = { 'Content-Type' => 'application/json', 'accept' => 'application/json' }
         begin
-#          payload = JSON.generate  :api_token=>api_key, :encode=>"base64", :data=>batch
           payload = batch.to_json
 
           request = Net::HTTP::Post.new(@path, headers)
-          request.basic_auth api_key, api_key
+          request.basic_auth api_token, api_token
 
           if self.class.stub
             status = 200
             error = nil
-            logger.debug "stubbed request to #{@path}: write key = #{api_key}, payload = #{payload}"
+            logger.debug "stubbed request to #{@path}: write key = #{api_token}, payload = #{payload}"
           else
             res = @http.request(request, payload)
 
             status = res.code.to_i
-            unless status==200 or status==201
+            unless status == 200 or status == 201
               body = JSON.parse(res.body)
-               error = body["error"]
+              error = body["error"]
             end
           end
         rescue Exception => e
-          unless (remaining_retries -=1).zero?
+          unless (remaining_retries -= 1).zero?
             sleep(backoff)
             retry
           end
