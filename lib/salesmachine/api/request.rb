@@ -57,7 +57,7 @@ module Salesmachine
             status = res.code.to_i
             unless status == 200 or status == 201
               body = JSON.parse(res.body)
-               error = body["error"]
+              error = body["error"]
             end
           end
         rescue Exception => e
