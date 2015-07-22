@@ -4,7 +4,7 @@ module SalesMachine
     def self.set(contact_uid, data={})
       publisher = Publisher.new()
       message = { :contact_uid => contact_uid.to_s, :params => data }
-      return publisher.post(:contact, message)
+      return publisher.post(:user, message)
     end
   end
 end

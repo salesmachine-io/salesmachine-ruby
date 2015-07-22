@@ -5,7 +5,6 @@ require 'salesmachine-ruby/user.rb'
 require 'salesmachine-ruby/element.rb'
 require 'salesmachine-ruby/track.rb'
 require 'salesmachine-ruby/email.rb'
-require 'salesmachine-ruby/product.rb'
 require 'salesmachine-ruby/account.rb'
 
 module SalesMachine
@@ -66,7 +65,4 @@ module SalesMachine
 	# Raised when requesting resources on behalf of a user that doesn't exist in your application on SalesMachine.
 	class ResourceNotFound < StandardError;
 	end
-
-	
-
 end
