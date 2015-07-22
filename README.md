@@ -5,7 +5,9 @@ salesmachine-ruby is a library for tracking events and sending **SalesMachine.IO
 
 ### Installation
 
-    gem install salesmachine-ruby
+    With bundler:
+    gem 'salesmachine-ruby', :git => 'git@github.com:salesmachine-io/salesmachine-ruby.git', :branch => 'master'
+
 
 ### Getting Started
 
