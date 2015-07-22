@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.license     = "MIT"
   spec.rubyforge_project = "salesmachine"
 
-  spec.files = Dir.glob(`git ls-files`.split("\n"))
+  spec.files = Dir['Rakefile', '{bin,lib,man,test,spec}/**/*', 'README*', 'LICENSE*'] & `git ls-files -z`.split("\0")
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency('rake')
