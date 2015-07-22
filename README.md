@@ -52,13 +52,9 @@ right away.
 
 ## Ruby on Rails
 
-### Installation
+In Gemfile
 
-    gem install salesmachine-ruby
-
-or in Gemfile
-
-    gem 'salesmachine-ruby'
+    gem 'salesmachine-ruby', :git => 'git@github.com:salesmachine-io/salesmachine-ruby.git', :branch => 'master'
 
 ### Configuration
 
