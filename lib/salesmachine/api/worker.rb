@@ -24,9 +24,10 @@ module Salesmachine
         @queue = queue
         @api_key = api_key
         @batch_size = options[:batch_size] || Queue::BATCH_SIZE
-        @on_error = options[:on_error] || Proc.new { |status, error| }
+        @on_error = options[:on_error] || proc { |_status, _error| }
         @batch = []
         @lock = Mutex.new
+        @options = options
       end
 
       # public: Continuously runs the loop to check for new events
@@ -40,8 +41,7 @@ module Salesmachine
               @batch << @queue.pop
             end
           end
-
-          res = Request.new.post @api_key, @batch
+          res = Request.new(@options).post @api_key, @batch
 
           @lock.synchronize { @batch.clear }
 

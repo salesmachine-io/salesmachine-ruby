@@ -18,12 +18,13 @@ module Salesmachine
       def initialize(options = {})
         options[:host] ||= HOST
         options[:port] ||= PORT
-        options[:ssl] ||= SSL
+        # ||= not working on boolean ;-)
+        options[:ssl] = SSL if options[:ssl].nil?
+
         options[:headers] ||= HEADERS
         @path = options[:path] || PATH
         @retries = options[:retries] || RETRIES
         @backoff = options[:backoff] || BACKOFF
-
         http = Net::HTTP.new(options[:host], options[:port])
         http.use_ssl = options[:ssl]
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -37,12 +38,13 @@ module Salesmachine
       #
       # returns - Response of the status and error if it exists
       def post(api_key, batch)
-        status, error = nil, nil
+        status = nil
+        error = nil
         remaining_retries = @retries
         backoff = @backoff
         headers = { 'Content-Type' => 'application/json', 'accept' => 'application/json' }
         begin
-#          payload = JSON.generate  :api_token=>api_key, :encode=>"base64", :data=>batch
+          #          payload = JSON.generate  :api_token=>api_key, :encode=>"base64", :data=>batch
           payload = batch.to_json
 
           request = Net::HTTP::Post.new(@path, headers)
@@ -56,13 +58,13 @@ module Salesmachine
             res = @http.request(request, payload)
 
             status = res.code.to_i
-            unless status==200 or status==201
+            unless status == 200 || status == 201
               body = JSON.parse(res.body)
-               error = body["error"]
+              error = body['error']
             end
           end
         rescue Exception => e
-          unless (remaining_retries -=1).zero?
+          unless (remaining_retries -= 1).zero?
             sleep(backoff)
             retry
           end

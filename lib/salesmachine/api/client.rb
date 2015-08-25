@@ -15,7 +15,7 @@ module Salesmachine
       #           :api_key         - String of your project's api_key
       #           :max_queue_size - Fixnum of the max calls to remain queued (optional)
       #           :on_error       - Proc which handles error calls from the API
-      def initialize attrs = {}
+      def initialize(attrs = {})
         symbolize_keys! attrs
 
         @queue = Queue.new
@@ -44,7 +44,7 @@ module Salesmachine
       # public: Tracks an event
       #
       # attrs - Hash
-      def track attrs
+      def track(attrs)
         symbolize_keys! attrs
         check_contact_id! attrs
 
@@ -61,19 +61,17 @@ module Salesmachine
         fail ArgumentError, 'Params must be a Hash' unless params.is_a? Hash
         isoify_dates! params
 
-        enqueue({
-          :event => event,
-          :contact_uid => attrs[:contact_uid],
-          :params => params,
-          :created_at => datetime_in_iso8601(created_at),
-          :method => 'event'
-        })
+        enqueue(event: event,
+                contact_uid: attrs[:contact_uid],
+                params: params,
+                created_at: datetime_in_iso8601(created_at),
+                method: 'event')
       end
 
       # public: Send an email
       #
       # attrs - Hash
-      def email attrs
+      def email(attrs)
         symbolize_keys! attrs
         check_contact_id! attrs
 
@@ -90,17 +88,14 @@ module Salesmachine
         fail ArgumentError, 'Params must be a Hash' unless params.is_a? Hash
         isoify_dates! params
 
-        enqueue({
-          :event => event,
-          :contact_uid => attrs[:contact_uid],
-          :params => params,
-          :created_at => datetime_in_iso8601(created_at),
-          :method => 'email'
-        })
+        enqueue(event: event,
+                contact_uid: attrs[:contact_uid],
+                params: params,
+                created_at: datetime_in_iso8601(created_at),
+                method: 'email')
       end
 
-
-      def contact attrs
+      def contact(attrs)
         symbolize_keys! attrs
         check_contact_id! attrs
 
@@ -112,14 +107,11 @@ module Salesmachine
         fail ArgumentError, 'Must supply params as a hash' unless params.is_a? Hash
         isoify_dates! params
 
-        enqueue({
-          :contact_uid => attrs[:contact_uid],
-          :params => params,
-          :created_at => datetime_in_iso8601(created_at),
-          :method => 'contact'
-        })
+        enqueue(contact_uid: attrs[:contact_uid],
+                params: params,
+                created_at: datetime_in_iso8601(created_at),
+                method: 'contact')
       end
-
 
       def account(attrs)
         symbolize_keys! attrs
@@ -134,12 +126,10 @@ module Salesmachine
 
         check_timestamp! created_at
 
-        enqueue({
-          :account_uid => account_uid,
-          :params => params,
-          :created_at => datetime_in_iso8601(created_at),
-          :method => 'account'
-        })
+        enqueue(account_uid: account_uid,
+                params: params,
+                created_at: datetime_in_iso8601(created_at),
+                method: 'account')
       end
 
       def pageview(attrs)
@@ -154,13 +144,11 @@ module Salesmachine
 
         check_timestamp! created_at
 
-        enqueue({
-          :contact_uid => attrs[:contact_uid],
-          :event => "pageview",
-          :params => attrs[:params],
-          :created_at => datetime_in_iso8601(created_at),
-          :method => 'pageview'
-        })
+        enqueue(contact_uid: attrs[:contact_uid],
+                event: 'pageview',
+                params: attrs[:params],
+                created_at: datetime_in_iso8601(created_at),
+                method: 'event')
       end
 
       # public: Returns the number of queued messages
@@ -200,7 +188,7 @@ module Salesmachine
       #
       # context - Hash of call context
       def add_context(context)
-        context[:library] =  { :name => "salesmachine-ruby", :version => Salesmachine::Api::VERSION.to_s }
+        context[:library] =  { name: 'salesmachine-ruby', version: Salesmachine::Api::VERSION.to_s }
       end
 
       # private: Checks that the api_key is properly initialized
@@ -213,7 +201,7 @@ module Salesmachine
         fail ArgumentError, 'Timestamp must be a Time' unless timestamp.is_a? Time
       end
 
-      def check_contact_id! attrs
+      def check_contact_id!(attrs)
         fail ArgumentError, 'Must supply a contact_uid' unless attrs[:contact_uid]
       end
 

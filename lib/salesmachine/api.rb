@@ -10,12 +10,12 @@ require 'salesmachine/api/logging'
 
 module Salesmachine
   class Api
-    def initialize options = {}
+    def initialize(options = {})
       Request.stub = options[:stub]
       @client = Salesmachine::Api::Client.new options
     end
 
-    def method_missing message, *args, &block
+    def method_missing(message, *args, &block)
       if @client.respond_to? message
         @client.send message, *args, &block
       else
@@ -23,7 +23,7 @@ module Salesmachine
       end
     end
 
-    def respond_to? method_name, include_private = false
+    def respond_to?(method_name, include_private = false)
       @client.respond_to?(method_name) || super
     end
 
