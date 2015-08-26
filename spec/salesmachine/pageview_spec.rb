@@ -6,7 +6,8 @@ module Salesmachine
 
       describe '#pageview' do
         before :all do
-          @client = Client.new :api_key => API_KEY
+          @client = Client.new :api_key => API_KEY, :host => HOST, :port => PORT,
+                                :path => PATH, :ssl => false
         end
 
         it 'should error without contact_uid' do

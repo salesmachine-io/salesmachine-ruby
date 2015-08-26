@@ -1,8 +1,6 @@
 require "salesmachine"
-require 'wrong'
 require 'active_support/time'
 
-include Wrong
 
 # Setting timezone for ActiveSupport::TimeWithZone to UTC
 Time.zone = 'UTC'
@@ -10,7 +8,10 @@ Time.zone = 'UTC'
 module Salesmachine
   class Api
     API_KEY = '<api_key>'
-    API_SECRET = '<api_secret>'
+    HOST = '127.0.0.1'
+    PORT = 9000
+    PATH = '/v1/batch'
+    SSL = false
 
     CONTACT =  {
       :params => {

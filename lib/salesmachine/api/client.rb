@@ -81,14 +81,14 @@ module Salesmachine
 
         check_timestamp! created_at
 
-        if email.nil? || evemailent.empty?
+        if email.nil? || email.empty?
           fail ArgumentError, 'Must supply email template as a non-empty string'
         end
 
         fail ArgumentError, 'Params must be a Hash' unless params.is_a? Hash
         isoify_dates! params
 
-        enqueue(event: event,
+        enqueue(email: email,
                 contact_uid: attrs[:contact_uid],
                 params: params,
                 created_at: datetime_in_iso8601(created_at),
