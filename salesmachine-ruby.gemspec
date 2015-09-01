@@ -8,9 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Salesmachine::Api::VERSION
   spec.authors       = ["Salesmachine"]
   spec.email         = ["team@salesmachine.io"]
-
-  spec.summary       = %q{Salesmachine.io ruby client}
-  spec.description   = %q{Ruby client for the next gen Salesmachine.io CRM.}
+  spec.summary       = 'Salesmachine.io library'
+  spec.description   = 'The Salesmachine.io ruby library'
   spec.homepage      = "http://salesmachine.io"
   spec.license       = "MIT"
 
