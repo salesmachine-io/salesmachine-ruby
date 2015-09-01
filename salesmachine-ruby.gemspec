@@ -6,11 +6,11 @@ require 'salesmachine/api/version'
 Gem::Specification.new do |spec|
   spec.name          = "salesmachine-ruby"
   spec.version       = Salesmachine::Api::VERSION
-  spec.authors       = ["citizen75"]
-  spec.email         = ["gsamoun@gmail.com"]
+  spec.authors       = ["Salesmachine"]
+  spec.email         = ["team@salesmachine.io"]
 
-  spec.summary       = %q{Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{Write a longer description or delete this line.}
+  spec.summary       = %q{Salesmachine.io ruby client}
+  spec.description   = %q{Ruby client for the next gen Salesmachine.io CRM.}
   spec.homepage      = "http://salesmachine.io"
   spec.license       = "MIT"
 
