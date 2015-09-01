@@ -1,23 +1,37 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-
-require 'salesmachine-ruby/version.rb'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'salesmachine/api/version'
 
 Gem::Specification.new do |spec|
-  spec.name        = "salesmachine-ruby"
-  spec.version     = SalesMachine::VERSION
-  spec.authors     = ["SalesMachine.IO"]
-  spec.email       = ["support@salesmachine.io"]
-  spec.homepage    = "https://www.salesmachine.io"
-  spec.summary     = %q{Ruby bindings for the SalesMachine API}
-  spec.description = 'The official SalesMachine tracking library for ruby'
-  spec.license     = "MIT"
-  spec.rubyforge_project = "salesmachine"
+  spec.name          = "salesmachine-ruby"
+  spec.version       = Salesmachine::Api::VERSION
+  spec.authors       = ["Salesmachine"]
+  spec.email         = ["team@salesmachine.io"]
 
-  spec.files = Dir['Rakefile', '{bin,lib,man,test,spec}/**/*', 'README*', 'LICENSE*'] & `git ls-files -z`.split("\0")
+  spec.summary       = %q{Salesmachine.io ruby client}
+  spec.description   = %q{Ruby client for the next gen Salesmachine.io CRM.}
+  spec.homepage      = "http://salesmachine.io"
+  spec.license       = "MIT"
+
+  # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
+  # delete this section to allow pushing this gem to any host.
+  if spec.respond_to?(:metadata)
+    spec.metadata['allowed_push_host'] = "http://mygemserver.com"
+  else
+    raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
+  end
+
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.bindir        = "exe"
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency('rake')
-  spec.add_development_dependency('rspec')
-  spec.add_development_dependency('webmock')
+  spec.add_development_dependency "bundler", "~> 1.10"
+  spec.add_development_dependency 'rake', '~> 10.3'
+  spec.add_development_dependency 'wrong', '~> 0.0'
+  spec.add_development_dependency 'rspec', '~> 2.0'
+  spec.add_development_dependency 'tzinfo', '1.2.1'
+  spec.add_development_dependency 'activesupport', '>= 3.0.0', '<4.0.0'
+
 end
